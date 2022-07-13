@@ -4,6 +4,7 @@ import fetchWeather from "../../services/weatherAPI";
 import DataWeatherInfo from "../DataWeatherInfo/DataWeatherInfo";
 import Loader from "../Loader";
 import { IWeatherData } from "../../types/dataWeatherInfo";
+import { getErrorMessage, reportError } from "../../services/Errors";
 
 interface WeatherInfoProps {
   cityName: IWeatherData;
@@ -18,7 +19,6 @@ const Status = {
 
 const WeatherInfo: FC<WeatherInfoProps> = ({ cityName }) => {
   const [weatherData, setWeatherData] = useState(null);
-  const [error, setError] = useState(null);
   const [status, setStatus] = useState(Status.IDLE);
 
   useEffect(() => {
@@ -54,7 +54,7 @@ const WeatherInfo: FC<WeatherInfoProps> = ({ cityName }) => {
       });
       setStatus(Status.RESOLVED);
     } catch (error) {
-      setError(error.message);
+      reportError({ message: getErrorMessage(error) });
       toast.error("There is no city with that name");
       setStatus(Status.REJECTED);
     }
