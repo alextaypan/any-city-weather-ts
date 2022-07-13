@@ -1,12 +1,16 @@
-import { useState } from "react";
+import React, { FC, useState } from "react";
 import { Button, Form, FormControl, Navbar } from "react-bootstrap";
 import { BsFillBrightnessLowFill } from "react-icons/bs";
 import { toast } from "react-toastify";
 
-const SearchForm = ({ onHandleSubmit }) => {
+type SearchFormProps = {
+  onHandleSubmit: (newSearch: string) => void;
+};
+
+const SearchForm: FC<SearchFormProps> = ({ onHandleSubmit }) => {
   const [query, setQuery] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (query.trim() === "") {
       return toast.info("Please enter a city name for searching!");
@@ -15,7 +19,7 @@ const SearchForm = ({ onHandleSubmit }) => {
     setQuery("");
   };
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value.toLowerCase());
   };
 

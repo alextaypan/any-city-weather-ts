@@ -1,8 +1,13 @@
-import { useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import fetchWeather from "../../services/weatherAPI";
 import DataWeatherInfo from "../DataWeatherInfo/DataWeatherInfo";
 import Loader from "../Loader";
+import { IWeatherData } from "../../types/dataWeatherInfo";
+
+interface WeatherInfoProps {
+  cityName: IWeatherData;
+}
 
 const Status = {
   IDLE: "idle",
@@ -11,7 +16,7 @@ const Status = {
   REJECTED: "rejected,",
 };
 
-const WeatherInfo = ({ cityName }) => {
+const WeatherInfo: FC<WeatherInfoProps> = ({ cityName }) => {
   const [weatherData, setWeatherData] = useState(null);
   const [error, setError] = useState(null);
   const [status, setStatus] = useState(Status.IDLE);
